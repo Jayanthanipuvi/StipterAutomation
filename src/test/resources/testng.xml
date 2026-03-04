@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Cucumber Suite">
+    <test name="CAK Tests">
+        <classes>
+            <class name="com.mop.runner.RunCakTest"/>
+
+        </classes>
+    </test>
+</suite>

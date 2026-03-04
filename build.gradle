@@ -1,0 +1,63 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.mop.automation'
+version = '1.0-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+dependencies {
+
+    // Test framework
+    testImplementation 'org.testng:testng:7.10.2'
+
+    // Cucumber
+    testImplementation 'io.cucumber:cucumber-java:7.18.0'
+    testImplementation 'io.cucumber:cucumber-testng:7.18.0'
+
+    // REST Assured
+    testImplementation 'io.rest-assured:rest-assured:5.5.0'
+    testImplementation 'io.rest-assured:json-path:5.5.0'
+    testImplementation 'io.rest-assured:xml-path:5.5.0'
+
+    // Selenium
+    testImplementation 'org.seleniumhq.selenium:selenium-java:4.25.0'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.9.2'
+
+    // Database (🔥 REQUIRED)
+    testImplementation 'org.postgresql:postgresql:42.7.3'
+
+    // Excel / CSV
+    testImplementation 'com.opencsv:opencsv:5.8'
+    testImplementation 'org.apache.poi:poi:5.3.0'
+    testImplementation 'org.apache.poi:poi-ooxml:5.3.0'
+
+    // XML
+    testImplementation 'org.xmlunit:xmlunit-core:2.10.0'
+
+    // SFTP
+    testImplementation 'com.jcraft:jsch:0.1.55'
+
+    // Logging
+    testImplementation 'org.apache.logging.log4j:log4j-api:2.24.1'
+    testImplementation 'org.apache.logging.log4j:log4j-core:2.24.1'
+    testImplementation 'org.apache.logging.log4j:log4j-slf4j2-impl:2.24.1'
+
+    // Utils
+    testImplementation 'commons-io:commons-io:2.16.1'
+}
+
+
+test {
+    useTestNG()
+
+
+}
