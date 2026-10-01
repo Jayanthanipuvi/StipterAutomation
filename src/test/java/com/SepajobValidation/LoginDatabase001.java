@@ -52,7 +52,7 @@ public class LoginDatabase001 {
     public void the_user_executes_the_select_query(String string) {
 
         String query = "SELECT * FROM invoiceline " +
-                "WHERE invoicelinedate > TO_DATE('19-01-2026', 'DD-MM-YYYY') " +
+                "WHERE invoicelinedate > TO_DATE('24-05-2026', 'DD-MM-YYYY') " +
                 "AND status IN (8600, 8700)";
 
         System.out.println(query + "Send query");
@@ -79,7 +79,7 @@ public class LoginDatabase001 {
         String updateQuery =
                 "UPDATE invoiceline " +
                         "SET status = 8400 " +
-                        "WHERE invoicelinedate > TO_DATE('19-01-2026', 'DD-MM-YYYY') " +
+                        "WHERE invoicelinedate > TO_DATE('24-05-2026', 'DD-MM-YYYY') " +
                         "AND status IN (8600, 8700)";
         System.out.println(updateQuery + "update query");
         try (PreparedStatement stmt = conn.prepareStatement(updateQuery)) {

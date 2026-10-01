@@ -85,7 +85,7 @@ public class Declarationvalidation_01 {
 
 
         try {
-            data = reader.getData(excelFilePath, "Factuurregels.xlsx");
+            data = reader.getData(excelFilePath, "Data");
             System.out.println("data.size() ------" + data.size());
 
             if (int1 >= data.size()) {
@@ -233,7 +233,7 @@ public class Declarationvalidation_01 {
 
             // 2️⃣ Load CSV data
             ExcelReader reader = new ExcelReader();
-            List<Map<String, String>> csvData = reader.getData(csvFilePath, "testing");
+            List<Map<String, String>> csvData = reader.getData(csvFilePath, "Declaration");
 
             if (rowNumber < 0 || rowNumber >= csvData.size()) {
                 throw new RuntimeException("❌ Invalid row number: " + rowNumber + " (CSV has " + csvData.size() + " rows)");
@@ -261,7 +261,7 @@ public class Declarationvalidation_01 {
                                     TO_CHAR(i.productenddate, 'DD-MM-YYYY') as "EindPeriode",
                                     p.vektisproductcode as "ProductCode",
                                     p.name as "ProductNaam",
-                                    REPLACE(TO_CHAR(i.amountexclvat, 'FM999990.99'), '.', ',') as "Tarief(excl)",
+                                    REPLACE(TO_CHAR(i.amountexclvat, 'FM999990.00'), '.', ',') as "Tarief(excl)",
                                     CAST(i.deliverednumberofunits AS INTEGER) as "#Eenheden",
                                     ir.id as "Rejectreason Id",
                                     ir.name as "Rejectreason Name",
@@ -278,7 +278,7 @@ public class Declarationvalidation_01 {
                                 where
                                     i.invoicelinedate is not null
                                     and i.facilitatorid = 24
-                                    and i.supplierid = 1475
+                                    and i.supplierid = 1133
                                     and i.contractid = '%s'
                                     and i.status in (8500, 8400)
                                     and i.amountexclvat = %s
@@ -369,6 +369,9 @@ public class Declarationvalidation_01 {
 
             if (!csvValue.equalsIgnoreCase(dbValue)) {
                 allMatch = false;
+                System.out.println("Mismatch field: " + field);
+                System.out.println("Expected full value: [" + csvValue + "]");
+                System.out.println("Actual full value:   [" + dbValue + "]");
             }
         }
 
@@ -461,7 +464,7 @@ public class Declarationvalidation_01 {
         try {
             // Make sure Excel was read
             if (data == null || data.isEmpty()) {
-                data = reader.getData(excelFilePath, "Factuurregels.xlsx");
+                data = reader.getData(excelFilePath, "Data");
             }
 
             if (rowNumber >= data.size()) {
@@ -535,7 +538,7 @@ public class Declarationvalidation_01 {
     public void the_user_triggers_the_job_api_using_the_stored_token(Integer rowNumber) {
         try {
             if (data == null || data.isEmpty()) {
-                data = reader.getData(excelFilePath, "Factuurregels.xlsx");
+                data = reader.getData(excelFilePath, "Data");
             }
 
             if (rowNumber >= data.size()) {

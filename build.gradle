@@ -11,6 +11,10 @@ java {
     }
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
 repositories {
     mavenCentral()
 }
@@ -53,6 +57,17 @@ dependencies {
 
     // Utils
     testImplementation 'commons-io:commons-io:2.16.1'
+
+    // Your existing dependencies
+    // cucumber
+    // testng
+    // rest-assured
+    // etc.
+
+    // Playwright
+    testImplementation 'com.microsoft.playwright:playwright:1.55.0'
+
+
 }
 
 

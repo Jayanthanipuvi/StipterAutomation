@@ -23,7 +23,7 @@ public class testing {
             // 1️⃣ Load CSV data
             String csvFilePath = PropertiesFileReader.getProperty("Declaration.csv");
             ExcelReader reader = new ExcelReader();
-            List<Map<String, String>> csvData = reader.getData(csvFilePath, "testing");
+            List<Map<String, String>> csvData = reader.getData(csvFilePath, "Declaration");
 
             if (rowNumber < 0 || rowNumber >= csvData.size()) {
                 throw new RuntimeException("❌ Invalid rowNumber: " + rowNumber);

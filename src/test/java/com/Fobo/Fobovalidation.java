@@ -3,8 +3,9 @@ package com.Fobo;
 import com.qa.util.ExcelReader;
 import com.qa.util.PropertiesFileReader;
 import com.stipter.util.AuthMode;
-import com.qa.factory.RequestSpecFactory;
+
 import com.stipter.util.TokenManager;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -23,11 +24,13 @@ import io.cucumber.java.Scenario;
 
 
 
+
 public class Fobovalidation {
     private static final Logger logger = org.apache.logging.log4j.LogManager.getLogger(Fobovalidation.class);
     private String accessToken;
     private AuthMode mode;
     private Scenario scenario;
+    private List<String> failedTestCases = new ArrayList<>();
 
     @io.cucumber.java.Before
     public void beforeScenario(Scenario scenario) {
@@ -38,6 +41,7 @@ public class Fobovalidation {
 
     private List<Map<String, String>> executedRows = new ArrayList<>();
 
+    private List<ExecutionResult> executionResults = new ArrayList<>();
 
     @Given("I have a valid GGK access token or cookie")
     public void i_have_a_valid_ggk_access_token() {
@@ -144,6 +148,15 @@ public class Fobovalidation {
             List<Map<String, Object>> errors =
                     response.jsonPath().getList("errors");
 
+            List<String> errorCodes = new ArrayList<>();
+
+            if (errors != null) {
+                for (Map<String, Object> err : errors) {
+                    errorCodes.add(String.valueOf(err.get("code")));
+                }
+            }
+
+
             if (errors != null && !errors.isEmpty()) {
 
                 rowPassed = false;
@@ -183,8 +196,12 @@ public class Fobovalidation {
             }
 
             // 4️⃣ Final row result (only one clean log per row)
-
+            executionResults.add(
+                    new ExecutionResult(row, actualStatus, errorCodes, responseBody)
+            );
             if (rowPassed) {
+
+
 
                 scenario.log(
                         "✅ PASS: " + testCaseId +
@@ -208,27 +225,139 @@ public class Fobovalidation {
 
         if (!failedTestCases.isEmpty()) {
 
-            Assert.fail("Some test cases failed. Total failed: " + failedTestCases.size());
+            this.failedTestCases = failedTestCases;
+
+            scenario.log("⚠️ Some test cases failed in API execution. Count: " + failedTestCases.size());
+            scenario.log("Failed TestCases: " + failedTestCases);
 
         } else {
 
             scenario.log("🎉 All test cases executed successfully.");
         }
+
     }
     @Then("I validate message and contract data in database for all processed rows")
-    public void i_validate_message_and_contract_data_in_database_for_all_processed_rows() {
+    public void i_validate_message_and_contract_data_in_database_for_all_processed_rows() throws Exception {
 
-        System.out.println("VAlidation");
 
+        StringBuilder reportTable = new StringBuilder();
+
+        reportTable.append(
+                String.format("%-12s %-6s %-12s %-10s %-12s %-10s %-10s %-15s %-20s %-6s\n",
+                        "Testcase", "Type", "BSN", "Product", "Toewijz",
+                        "ExpStat", "ActStat", "ExpErr", "ActErr", "Result")
+        );
+
+        reportTable.append("------------------------------------------------------------------------------------------------------------\n");
+        System.out.println("🔍 Starting Validation...");
+
+        boolean overallFail = false;
+
+        for (ExecutionResult result : executionResults) {
+
+
+
+            Map<String, String> row = result.row;
+
+            String testCaseId = row.get("testCaseId");
+            String type = row.get("301/301_MUT");
+            String toewijzing = row.get("toewijzingNummer");
+            String productCode = row.get("productCode");
+            String bsn = row.get("bsn");
+
+            int expectedStatus = Integer.parseInt(row.get("expectedHttpStatus"));
+            String expectedErrorCode = row.getOrDefault("ExpectedFoboerrorcode", "").trim();
+
+            int actualStatus = result.actualStatus;
+            List<String> actualErrorCodes = result.actualErrorCodes;
+
+            boolean pass = true;
+            StringBuilder reason = new StringBuilder();
+
+            if (testCaseId == null || testCaseId.trim().isEmpty()) {
+                pass = false;
+                reason.append("Empty row in Excel\n");
+            }
+
+
+
+
+
+
+
+            // ✅ Status validation
+            if (actualStatus != expectedStatus) {
+                pass = false;
+                reason.append("Status mismatch. Expected: ")
+                        .append(expectedStatus)
+                        .append(" Actual: ")
+                        .append(actualStatus)
+                        .append("\n");
+            }
+
+            // ✅ Error code validation
+            if (expectedErrorCode.isEmpty()) {
+                if (actualErrorCodes != null && !actualErrorCodes.isEmpty()) {
+                    pass = false;
+                    reason.append("Unexpected error codes. Expected: [] Actual: ")
+                            .append(actualErrorCodes)
+                            .append("\n");
+                }
+            } else if (!actualErrorCodes.contains(expectedErrorCode)) {
+                pass = false;
+                reason.append("ErrorCode mismatch. Expected: ")
+                        .append(expectedErrorCode)
+                        .append(" Actual: ")
+                        .append(actualErrorCodes)
+                        .append("\n");
+            }
+
+            // ✅ Empty row validation
+            if (testCaseId == null || testCaseId.trim().isEmpty()) {
+                pass = false;
+                reason.append("Empty row in Excel\n");
+            }
+            String resultStatus = pass ? "PASS" : "FAIL";
+
+            reportTable.append(
+                    String.format("%-12s %-6s %-12s %-10s %-12s %-10s %-10s %-15s %-20s %-6s\n",
+                            testCaseId,
+                            type,
+                            bsn,
+                            productCode,
+                            toewijzing,
+                            expectedStatus,
+                            actualStatus,
+                            expectedErrorCode,
+                            actualErrorCodes.toString(),
+                            resultStatus
+                    )
+            );
+
+            // ✅ REPORT PRINT
+            if (!pass) {
+                overallFail = true;
+            }
+
+        }
+        writeToExcel(executionResults);
+        scenario.attach(reportTable.toString(), "text/plain", "Validation Summary Table");
+
+        if (overallFail) {
+            Assert.fail("❌ Validation failed. Check report.");
+
+        }
+
+        System.out.println("✅ Validation Completed");
     }
 
     private Response sendRequest(Map<String, String> row, String identification) {
 
         String xmlPayload = buildXmlFromRow(row, identification);
 
-//        System.out.println("========== REQUEST XML ==========");
-//        System.out.println(xmlPayload);
-//        System.out.println("=================================");
+        System.out.println("========== REQUEST XML ==========");
+        System.out.println(xmlPayload);
+        System.out.println("=================================");
 
 
 
@@ -384,6 +513,97 @@ public class Fobovalidation {
                 r.get("eenheid"),
                 r.get("frequentie")
         );
+    }
+    // ✅ Excel method (OUTSIDE ExecutionResult)
+    private void writeToExcel(List<ExecutionResult> results) throws Exception {
+
+        org.apache.poi.xssf.usermodel.XSSFWorkbook workbook =
+                new org.apache.poi.xssf.usermodel.XSSFWorkbook();
+        org.apache.poi.xssf.usermodel.XSSFSheet sheet =
+                workbook.createSheet("Results");
+
+        int rowNum = 0;
+
+        // Header
+        String[] headers = {"Testcase","Type","BSN","Product","Toewijzing",
+                "ExpectedStatus","ActualStatus","ExpectedError","ActualError","Result"};
+
+        org.apache.poi.ss.usermodel.Row headerRow = sheet.createRow(rowNum++);
+
+        for (int i = 0; i < headers.length; i++) {
+            headerRow.createCell(i).setCellValue(headers[i]);
+        }
+
+        // Data
+        for (ExecutionResult result : results) {
+
+            Map<String, String> row = result.row;
+
+            String testCaseId = row.get("testCaseId");
+            String type = row.get("301/301_MUT");
+            String bsn = row.get("bsn");
+            String product = row.get("productCode");
+            String toewijzing = row.get("toewijzingNummer");
+
+            int expectedStatus = Integer.parseInt(row.get("expectedHttpStatus"));
+            String expectedError = row.getOrDefault("ExpectedFoboerrorcode", "").trim();
+
+            int actualStatus = result.actualStatus;
+            String actualError = result.actualErrorCodes.toString();
+
+            boolean pass = true;
+
+            if (actualStatus != expectedStatus) pass = false;
+            if (expectedError.isEmpty()) {
+                if (result.actualErrorCodes != null && !result.actualErrorCodes.isEmpty()) {
+                    pass = false;
+                }
+            } else if (!result.actualErrorCodes.contains(expectedError)) {
+                pass = false;
+            }
+
+            String finalResult = pass ? "PASS" : "FAIL";
+
+            org.apache.poi.ss.usermodel.Row excelRow = sheet.createRow(rowNum++);
+
+            excelRow.createCell(0).setCellValue(testCaseId);
+            excelRow.createCell(1).setCellValue(type);
+            excelRow.createCell(2).setCellValue(bsn);
+            excelRow.createCell(3).setCellValue(product);
+            excelRow.createCell(4).setCellValue(toewijzing);
+            excelRow.createCell(5).setCellValue(expectedStatus);
+            excelRow.createCell(6).setCellValue(actualStatus);
+            excelRow.createCell(7).setCellValue(expectedError);
+            excelRow.createCell(8).setCellValue(actualError);
+            excelRow.createCell(9).setCellValue(finalResult);
+        }
+
+        java.io.FileOutputStream fileOut =
+                new java.io.FileOutputStream("target/Validation_Report.xlsx");
+
+        workbook.write(fileOut);
+        fileOut.close();
+        workbook.close();
+
+        System.out.println("📄 Excel report generated: target/Validation_Report.xlsx");
+    }
+
+
+    // ✅ ExecutionResult class (AFTER method)
+    class ExecutionResult {
+
+        Map<String, String> row;
+        int actualStatus;
+        List<String> actualErrorCodes;
+        String responseBody;
+
+        public ExecutionResult(Map<String, String> row, int actualStatus,
+                               List<String> actualErrorCodes, String responseBody) {
+            this.row = row;
+            this.actualStatus = actualStatus;
+            this.actualErrorCodes = actualErrorCodes;
+            this.responseBody = responseBody;
+        }
     }
 }
 
