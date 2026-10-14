@@ -1,0 +1,422 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:BG="http://www.stuf0301.impl.gbalistener.gba.extern_service.mop.stipter.nl">
+
+    <soapenv:Header/>
+
+    <soapenv:Body>
+
+        <npsLk01 xmlns="http://www.egem.nl/StUF/sector/bg/0310"
+                 xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+
+            <stuurgegevens>
+
+                <berichtcode xmlns="http://www.egem.nl/StUF/StUF0301">
+                    Lk01
+                </berichtcode>
+
+                <zender xmlns="http://www.egem.nl/StUF/StUF0301">
+
+                    <organisatie>${organisatie}</organisatie>
+
+                    <applicatie>DDS</applicatie>
+
+                    <gebruiker>ADMIN</gebruiker>
+
+                </zender>
+
+                <ontvanger xmlns="http://www.egem.nl/StUF/StUF0301">
+
+                    <applicatie>AeolusBack</applicatie>
+
+                </ontvanger>
+
+                <referentienummer xmlns="http://www.egem.nl/StUF/StUF0301">
+                    35969589
+                </referentienummer>
+
+                <tijdstipBericht xmlns="http://www.egem.nl/StUF/StUF0301">
+                    2025072000060774
+                </tijdstipBericht>
+
+                <entiteittype xmlns="http://www.egem.nl/StUF/StUF0301">
+                    NPS
+                </entiteittype>
+
+            </stuurgegevens>
+
+
+            <parameters>
+
+                <mutatiesoort xmlns="http://www.egem.nl/StUF/StUF0301">
+                    W
+                </mutatiesoort>
+
+                <indicatorOvername xmlns="http://www.egem.nl/StUF/StUF0301">
+                    V
+                </indicatorOvername>
+
+            </parameters>
+
+
+            <!-- ===================================================== -->
+            <!-- OBJECT 1 -->
+            <!-- ===================================================== -->
+
+            <object a:entiteittype="NPS"
+                    a:sleutelOntvangend="${sleutelOntvangend}"
+                    a:sleutelVerzendend="998978"
+                    a:verwerkingssoort="W"
+                    xmlns:a="http://www.egem.nl/StUF/StUF0301">
+
+                <inp.bsn a:noValue="nietOndersteund"
+                         xsi:nil="true"
+                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                <authentiek a:metagegeven="true"
+                            a:noValue="nietOndersteund"
+                            xsi:nil="true"
+                            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                <inp.a-nummer a:noValue="nietOndersteund"
+                              xsi:nil="true"
+                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                <geslachtsnaam a:noValue="nietOndersteund"
+                               xsi:nil="true"
+                               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                <voorvoegselGeslachtsnaam a:noValue="nietOndersteund"
+                                          xsi:nil="true"
+                                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                <voorletters a:noValue="nietOndersteund"
+                             xsi:nil="true"
+                             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                <voornamen a:noValue="nietOndersteund"
+                           xsi:nil="true"
+                           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                <geslachtsaanduiding a:noValue="nietOndersteund"
+                                     xsi:nil="true"
+                                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                <geboortedatum a:noValue="nietOndersteund"
+                               xsi:nil="true"
+                               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+
+                <inp.verblijftIn a:entiteittype="NPSTGO"
+                                 a:verwerkingssoort="R">
+
+                    <gerelateerde a:entiteittype="TGO"
+                                  a:sleutelVerzendend="521942"
+                                  a:verwerkingssoort="I">
+
+                        <identificatie a:noValue="nietOndersteund"
+                                       xsi:nil="true"
+                                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                        <authentiek a:metagegeven="true"
+                                    a:noValue="nietOndersteund"
+                                    xsi:nil="true"
+                                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                        <typering a:noValue="nietOndersteund"
+                                  xsi:nil="true"
+                                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+
+                        <adresAanduidingGrp>
+
+                            <num.identificatie>
+                                0627200000012165
+                            </num.identificatie>
+
+                            <authentiek a:metagegeven="true"
+                                        a:noValue="nietOndersteund"
+                                        xsi:nil="true"
+                                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                            <wpl.woonplaatsNaam>
+                                Waddinxveen1
+                            </wpl.woonplaatsNaam>
+
+                            <gor.openbareRuimteNaam>
+                                Plasweg
+                            </gor.openbareRuimteNaam>
+
+                            <aoa.postcode>
+                                3752KB
+                            </aoa.postcode>
+
+                            <aoa.huisnummer>
+                                2
+                            </aoa.huisnummer>
+
+                            <aoa.huisletter>
+                                D
+                            </aoa.huisletter>
+
+                            <aoa.huisnummertoevoeging a:noValue="geenWaarde"
+                                                      xsi:nil="true"
+                                                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                            <ogo.locatieAanduiding a:noValue="geenWaarde"
+                                                   xsi:nil="true"
+                                                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                        </adresAanduidingGrp>
+
+                    </gerelateerde>
+
+
+                    <a:tijdvakRelatie>
+
+                        <a:beginRelatie>
+                            20210515
+                        </a:beginRelatie>
+
+                        <a:eindRelatie>
+                            20250624
+                        </a:eindRelatie>
+
+                    </a:tijdvakRelatie>
+
+                </inp.verblijftIn>
+
+
+                <verblijfsadres>
+
+                    <aoa.identificatie>
+                        0627200000012163
+                    </aoa.identificatie>
+
+                    <authentiek a:metagegeven="true"
+                                a:noValue="nietOndersteund"
+                                xsi:nil="true"
+                                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                    <wpl.woonplaatsNaam>
+                        Wfddinxveen
+                    </wpl.woonplaatsNaam>
+
+                    <gor.openbareRuimteNaam>
+                        Plasweg1
+                    </gor.openbareRuimteNaam>
+
+                    <gor.straatnaam>
+                        Plasweg1
+                    </gor.straatnaam>
+
+                    <aoa.postcode>
+                        2742KF
+                    </aoa.postcode>
+
+                    <aoa.huisnummer>
+                        18
+                    </aoa.huisnummer>
+
+                    <aoa.huisletter>
+                        J
+                    </aoa.huisletter>
+
+                    <aoa.huisnummertoevoeging a:noValue="geenWaarde"
+                                              xsi:nil="true"
+                                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                    <inp.locatiebeschrijving a:noValue="geenWaarde"
+                                             xsi:nil="true"
+                                             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                    <begindatumVerblijf>
+                        20210515
+                    </begindatumVerblijf>
+
+                </verblijfsadres>
+
+
+                <inp.gemeenteVanInschrijving>
+                    ${gemeente1}
+                </inp.gemeenteVanInschrijving>
+
+            </object>
+
+
+            <!-- ===================================================== -->
+            <!-- OBJECT 2 -->
+            <!-- ===================================================== -->
+
+            <object a:entiteittype="NPS"
+                    a:sleutelOntvangend="${sleutelOntvangend}"
+                    a:sleutelVerzendend="998978"
+                    a:verwerkingssoort="W"
+                    xmlns:a="http://www.egem.nl/StUF/StUF0301">
+
+                <inp.bsn a:noValue="nietOndersteund"
+                         xsi:nil="true"
+                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                <authentiek a:metagegeven="true"
+                            a:noValue="nietOndersteund"
+                            xsi:nil="true"
+                            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                <inp.a-nummer a:noValue="nietOndersteund"
+                              xsi:nil="true"
+                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                <geslachtsnaam a:noValue="nietOndersteund"
+                               xsi:nil="true"
+                               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                <voorvoegselGeslachtsnaam a:noValue="nietOndersteund"
+                                          xsi:nil="true"
+                                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                <voorletters a:noValue="nietOndersteund"
+                             xsi:nil="true"
+                             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                <voornamen a:noValue="nietOndersteund"
+                           xsi:nil="true"
+                           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                <geslachtsaanduiding a:noValue="nietOndersteund"
+                                     xsi:nil="true"
+                                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                <geboortedatum a:noValue="nietOndersteund"
+                               xsi:nil="true"
+                               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+
+                <inp.verblijftIn a:entiteittype="NPSTGO"
+                                 a:verwerkingssoort="R">
+
+                    <gerelateerde a:entiteittype="TGO"
+                                  a:sleutelVerzendend="558775"
+                                  a:verwerkingssoort="I">
+
+                        <identificatie a:noValue="nietOndersteund"
+                                       xsi:nil="true"
+                                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                        <authentiek a:metagegeven="true"
+                                    a:noValue="nietOndersteund"
+                                    xsi:nil="true"
+                                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                        <typering a:noValue="nietOndersteund"
+                                  xsi:nil="true"
+                                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+
+                        <adresAanduidingGrp>
+
+                            <num.identificatie>
+                                0499200002032156
+                            </num.identificatie>
+
+                            <authentiek a:metagegeven="true"
+                                        a:noValue="nietOndersteund"
+                                        xsi:nil="true"
+                                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                            <wpl.woonplaatsNaam>
+                                Boskoopte11
+                            </wpl.woonplaatsNaam>
+
+                            <gor.openbareRuimteNaam>
+                                t1eststreet1
+                            </gor.openbareRuimteNaam>
+
+                            <aoa.postcode>
+                                6785CN
+                            </aoa.postcode>
+
+                            <aoa.huisnummer>
+                                25
+                            </aoa.huisnummer>
+
+                            <aoa.huisletter a:noValue="geenWaarde"
+                                            xsi:nil="true"
+                                            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                            <aoa.huisnummertoevoeging a:noValue="geenWaarde"
+                                                      xsi:nil="true"
+                                                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                            <ogo.locatieAanduiding a:noValue="geenWaarde"
+                                                   xsi:nil="true"
+                                                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                        </adresAanduidingGrp>
+
+                    </gerelateerde>
+
+
+                    <a:tijdvakRelatie>
+
+                        <a:beginRelatie>
+                            20250627
+                        </a:beginRelatie>
+
+                        <a:eindRelatie a:noValue="geenWaarde"
+                                       xsi:nil="true"
+                                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                    </a:tijdvakRelatie>
+
+                </inp.verblijftIn>
+
+
+                <!-- ONLY THESE ADDRESS VALUES ARE DYNAMIC -->
+
+                <verblijfsadres>
+
+                    <aoa.identificatie>0499200002032160</aoa.identificatie>
+
+                    <authentiek a:metagegeven="true"
+                                a:noValue="nietOndersteund"
+                                xsi:nil="true"
+                                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                    <wpl.woonplaatsNaam>${woonplaatsNaam}</wpl.woonplaatsNaam>
+
+                    <gor.openbareRuimteNaam>${openbareRuimteNaam}</gor.openbareRuimteNaam>
+
+                    <gor.straatnaam>${straatnaam}</gor.straatnaam>
+
+                    <aoa.postcode>${postcode}</aoa.postcode>
+
+                    <aoa.huisnummer>${huisnummer}</aoa.huisnummer>
+
+                    <aoa.huisletter a:noValue="geenWaarde"
+                                    xsi:nil="true"
+                                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                    <aoa.huisnummertoevoeging a:noValue="geenWaarde"
+                                              xsi:nil="true"
+                                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                    <inp.locatiebeschrijving a:noValue="geenWaarde"
+                                             xsi:nil="true"
+                                             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+                    <begindatumVerblijf>20250626</begindatumVerblijf>
+
+                </verblijfsadres>
+
+
+                <inp.gemeenteVanInschrijving>
+                    ${gemeente2}
+                </inp.gemeenteVanInschrijving>
+
+            </object>
+
+        </npsLk01>
+
+    </soapenv:Body>
+
+</soapenv:Envelope>
